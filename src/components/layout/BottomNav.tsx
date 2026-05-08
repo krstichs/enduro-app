@@ -5,15 +5,15 @@ import { cn } from '../../lib/utils'
 const navItems = [
   { icon: Home, label: 'Home', path: '/dashboard' },
   { icon: Dumbbell, label: 'Gym', path: '/gym' },
-  { icon: Activity, label: 'Running', path: '/running' },
-  { icon: User, label: 'Profile', path: '/profile' },
+  { icon: Activity, label: 'Run', path: '/running' },
+  { icon: User, label: 'Profil', path: '/profile' },
 ]
 
 export function BottomNav() {
   const location = useLocation()
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-enduro-gray border-t border-gray-700 px-4 py-2 safe-area-bottom md:hidden z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-enduro-gray/80 backdrop-blur-xl border-t border-white/5 px-4 py-2 safe-area-bottom md:hidden z-50">
       <div className="flex items-center justify-around max-w-lg mx-auto">
         {navItems.map(({ icon: Icon, label, path }) => {
           const isActive = location.pathname === path
@@ -22,15 +22,26 @@ export function BottomNav() {
             <Link
               key={path}
               to={path}
-              className={cn(
-                'flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-colors',
-                isActive 
-                  ? 'text-gym-orange' 
-                  : 'text-gray-400 hover:text-enduro-light'
-              )}
+              className="relative flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all active:scale-95"
             >
-              <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
-              <span className="text-xs font-medium">{label}</span>
+              {/* Active Indicator */}
+              {isActive && (
+                <div className="absolute inset-0 bg-gym-gradient opacity-10 rounded-xl" />
+              )}
+              
+              <div className={cn(
+                'relative transition-colors',
+                isActive ? 'text-gym-orange' : 'text-gray-400'
+              )}>
+                <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
+              </div>
+              
+              <span className={cn(
+                'text-xs font-medium transition-colors',
+                isActive ? 'text-gym-orange' : 'text-gray-400'
+              )}>
+                {label}
+              </span>
             </Link>
           )
         })}

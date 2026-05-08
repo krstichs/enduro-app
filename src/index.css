@@ -1,25 +1,110 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* 1. Definicija tvojih boja */
+@theme {
+  --color-enduro-dark: #0a0a0a;
+  --color-enduro-darker: #050505;
+  --color-enduro-light: #f5f5f5;
+  --color-enduro-gray: #1a1a1a;
+  --color-enduro-gray-light: #2a2a2a;
+  --color-gym-orange: #FF6B35;
+  --color-gym-orange-dark: #E55A2B;
+  --color-run-cyan: #00D9FF;
+  --color-run-cyan-dark: #00B8D4;
+  --color-success-green: #10B981;
+  --color-accent-purple: #A855F7;
+  --color-accent-pink: #EC4899;
+  --color-enduro-dark-bg: #1e1e1e;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #1a1a1a;
-  color: #e5e5e5;
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    @apply bg-enduro-darker text-enduro-light;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
-img {
-  max-width: 1000px;
+header {
+  background-color: #1e1e1e;
 }
 
+@layer components {
+  /* Glass Card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Gradient Card */
+  .gradient-card-gym {
+    background: linear-gradient(to bottom right, rgba(255, 107, 53, 0.2), rgba(255, 107, 53, 0.1), transparent);
+    border: 1px solid rgba(255, 107, 53, 0.3);
+  }
+  
+  .gradient-card-run {
+    background: linear-gradient(to bottom right, rgba(0, 217, 255, 0.2), rgba(0, 217, 255, 0.1), transparent);
+    border: 1px solid rgba(0, 217, 255, 0.3);
+  }
+  
+  /* Button Variants */
+  .btn-primary-gym {
+    background: linear-gradient(135deg, #FF6B35 0%, #E55A2B 100%);
+    @apply text-white font-semibold px-6 py-3 rounded-xl;
+    box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+    @apply active:scale-95 transition-all duration-200;
+  }
+  
+  .btn-primary-gym:hover {
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+  }
+  
+  .btn-primary-run {
+    background: linear-gradient(135deg, #00D9FF 0%, #00B8D4 100%);
+    @apply text-enduro-darker font-semibold px-6 py-3 rounded-xl;
+    box-shadow: 0 10px 25px rgba(0, 217, 255, 0.3);
+    @apply active:scale-95 transition-all duration-200;
+  }
+  
+  .btn-primary-run:hover {
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+  }
+  
+  /* Input Field */
+  .input-field {
+    @apply w-full px-4 py-3.5 rounded-xl text-enduro-light;
+    background: rgba(42, 42, 42, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    @apply focus:outline-none transition-all duration-200;
+  }
+  
+  .input-field:focus {
+    border-color: rgba(255, 107, 53, 0.5);
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Stat Card - OVO JE POPRAVLJENO */
+  .stat-card {
+    /* Prekopiran kod iz glass-card umesto @apply */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* Standardne Tailwind klase koje smeju da idu u @apply */
+    @apply rounded-2xl p-5 hover:bg-white/10 transition-all duration-300;
+  }
+}
 
 /* Mobile optimizations */
 @media (max-width: 768px) {
@@ -33,26 +118,63 @@ img {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* Active state animation */
-.active\:scale-95:active {
-  transform: scale(0.95);
-}
-
-.active\:scale-98:active {
-  transform: scale(0.98);
+/* Remove tap highlight */
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
-}
-
-/* Remove tap highlight on mobile */
-* {
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Better touch scrolling */
-body {
   -webkit-overflow-scrolling: touch;
 }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3a;
+}
+
+/* Animation helpers */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+
+

@@ -10,6 +10,7 @@ export function Logo({ variant = 'dark', className = '' }: LogoProps) {
 
   return (
     <img 
+      class = "h-7"
       src={logoSrc} 
       alt="Enduro" 
       className={`h-8 ${className}`}

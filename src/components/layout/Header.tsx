@@ -12,7 +12,7 @@ export function Header({ title, showBack, rightAction }: HeaderProps) {
   const navigate = useNavigate()
 
   return (
-    <header className="sticky top-0 bg-enduro-gray border-b border-gray-700 px-4 py-3 z-40">
+    <header className="sticky top-0 color-enduro-dark-bg border-b border-gray-700 px-4 py-3 z-40">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         <div className="flex items-center gap-3">
           {showBack ? (
@@ -23,7 +23,7 @@ export function Header({ title, showBack, rightAction }: HeaderProps) {
               <ArrowLeft size={24} />
             </button>
           ) : (
-            <Logo variant="light" className="h-7" />
+            <Logo variant="dark" className="h-12" />
           )}
           
           {title && (
