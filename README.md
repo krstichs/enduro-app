@@ -1,73 +1,66 @@
-# React + TypeScript + Vite
+# ⚡ ENDURO | The Hybrid Athlete OS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 
-Currently, two official plugins are available:
+**Enduro** is a high-performance ecosystem built for hybrid athletes. Whether you're crushing a heavy squat session or hitting 400m track intervals, Enduro tracks every metric that matters.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 💎 Key Pillars
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🏋️‍♂️ Gym Intelligence
+* **Custom Templates:** Build "Upper/Lower" or "Push/Pull" splits with a few taps.
+* **Set-by-Set Logging:** Real-time tracking of weights, reps, and RPE.
+* **Auto-Rest Timer:** Smart countdowns between sets to keep the intensity high.
 
-## Expanding the ESLint configuration
+### 🏃‍♀️ Endurance Tracking
+* **Run Logic:** Dedicated tracking for Tempos, Long Runs, and Intervals.
+* **Session Grading:** Post-run analysis—rate your effort and track how you feel over time.
+* **Training Plans:** Structure your weekly mileage and never miss a session.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🛠 Tech Superiority
+* **Real-time Database:** Powered by Supabase for instant data sync.
+* **Modern UI:** Built with Tailwind v4 for a lightning-fast, high-contrast dark mode.
+* **Cross-Platform:** Web-first, with Electron support for a dedicated desktop experience.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🎨 Look & Feel
+The interface is engineered for focus.
+* **Primary Color:** `Gym Orange` (#f97316) – Fueling your motivation.
+* **Surface:** `Enduro Gray` (#1f2937) – Optimized for low-light gym floors.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Quick Start
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1.  **Clone & Install**
+    ```bash
+    git clone [https://github.com/krstichs/enduro-app.git](https://github.com/krstichs/enduro-app.git)
+    cd enduro-app
+    npm install
+    ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2.  **Environment Configuration**
+    Create a `.env.local` file:
+    ```env
+    VITE_SUPABASE_URL=your_supabase_url
+    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+    ```
+
+3.  **Deploy Locally**
+    ```bash
+    npm run dev
+    ```
+
+---
+
+## 👥 Contributors
+Built with ☕ and 🎧 by:
+* **Stefan Krstić** & **Maša Avramov**
+
+---
+*Stop guessing. Start tracking. Go **Enduro**.*
