@@ -60,7 +60,7 @@ The interface is engineered for focus.
 
 ## 👥 Contributors
 Built with ☕ and 🎧 by:
-* **Stefan Krstić** & **Maša Avramov**
+* **Stefan Krstić**
 
 ---
 *Stop guessing. Start tracking. Go **Enduro**.*
