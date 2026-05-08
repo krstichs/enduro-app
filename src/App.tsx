@@ -3,6 +3,8 @@ import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { Login } from './pages/Login'
 import { Signup } from './pages/Signup'
 import { Dashboard } from './pages/Dashboard'
+import { GymTemplates } from './pages/GymTemplates'
+import { GymTemplateCreator } from './pages/GymTemplateCreator'
 
 // Protected Route wrapper
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -65,9 +67,29 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+
+      {/* GYM ROUTES */}
+      <Route
+        path="/gym"
+        element={
+          <ProtectedRoute>
+            <GymTemplates />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/gym/new"
+        element={
+          <ProtectedRoute>
+            <GymTemplateCreator />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   )
 }
+
 
 function App() {
   return (
