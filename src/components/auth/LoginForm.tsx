@@ -36,7 +36,7 @@ export function LoginForm() {
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-          Email
+          Email address
         </label>
         <input
           id="email"
@@ -45,7 +45,7 @@ export function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
           className="w-full px-4 py-3 bg-enduro-dark border border-gray-600 rounded-lg text-enduro-light focus:outline-none focus:border-gym-orange transition-colors"
-          placeholder="tvoj@email.com"
+          placeholder="your@email.com"
         />
       </div>
 
@@ -69,13 +69,13 @@ export function LoginForm() {
         disabled={loading}
         className="w-full bg-gym-orange hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {loading ? 'Prijavljivanje...' : 'Prijavi se'}
+        {loading ? 'Logging in...' : 'Log in'}
       </button>
 
       <p className="text-center text-gray-400 text-sm">
-        Nemaš account?{' '}
+        Don't have an account?{' '}
         <Link to="/signup" className="text-gym-orange hover:text-orange-400 font-medium">
-          Registruj se
+          Sign up
         </Link>
       </p>
     </form>

@@ -44,7 +44,7 @@ export function GymTemplates() {
 
   return (
     <PageLayout 
-      title="Gym Workouts"
+      title=""
       headerAction={
         <button
           onClick={() => navigate('/gym/new')}
@@ -60,15 +60,15 @@ export function GymTemplates() {
           <div className="grid grid-cols-3 gap-3">
             <div className="stat-card text-center">
               <p className="text-2xl font-black text-gym-orange mb-1">8</p>
-              <p className="text-xs text-gray-500">Treninga</p>
+              <p className="text-xs text-gray-500">Workouts</p>
             </div>
             <div className="stat-card text-center">
               <p className="text-2xl font-black text-run-cyan mb-1">45</p>
-              <p className="text-xs text-gray-500">Vežbi</p>
+              <p className="text-xs text-gray-500">Exercises</p>
             </div>
             <div className="stat-card text-center">
               <p className="text-2xl font-black text-success-green mb-1">156</p>
-              <p className="text-xs text-gray-500">Setova</p>
+              <p className="text-xs text-gray-500">Sets</p>
             </div>
           </div>
         </div>
@@ -86,16 +86,16 @@ export function GymTemplates() {
                   <Dumbbell size={48} strokeWidth={2} />
                 </div>
               </div>
-              <h3 className="text-2xl font-bold mb-3">Nemaš još treninga</h3>
+              <h3 className="text-2xl font-bold mb-3">No workouts yet</h3>
               <p className="text-gray-400 mb-8 max-w-sm mx-auto">
-                Kreiraj svoj prvi workout plan i započni transformaciju!
+                Create your first workout plan and start your transformation!
               </p>
               <button
                 onClick={() => navigate('/gym/new')}
                 className="btn-primary-gym inline-flex items-center gap-2"
               >
                 <Plus size={20} />
-                Kreiraj prvi trening
+                Create First Workout
               </button>
             </div>
           ) : (
@@ -124,7 +124,7 @@ export function GymTemplates() {
                         <div className="flex items-center gap-4 text-sm text-gray-400">
                           <span className="flex items-center gap-1">
                             <TrendingUp size={14} />
-                            12 vežbi
+                            12 exercises
                           </span>
                           <span className="flex items-center gap-1">
                             <Clock size={14} />

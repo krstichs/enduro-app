@@ -4,8 +4,8 @@ import { LoginForm } from '../components/auth/LoginForm'
 export function Login() {
   return (
     <AuthLayout 
-      title="Dobrodošao nazad!" 
-      subtitle="Prijavi se da nastaviš trening"
+      title="Welcome back!" 
+      subtitle="Sign in to continue your training"
     >
       <LoginForm />
     </AuthLayout>

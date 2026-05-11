@@ -28,7 +28,7 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-enduro-dark flex items-center justify-center">
-        <div className="text-enduro-light text-xl">Učitavanje...</div>
+        <div className="text-enduro-light text-xl">Loading...</div>
       </div>
     )
   }

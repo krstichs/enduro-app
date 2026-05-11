@@ -35,7 +35,7 @@ export function GymTemplateCreator() {
       navigate(`/gym/template/${data.id}/edit`)
     } catch (error) {
       console.error('Error creating template:', error)
-      alert('Greška pri čuvanju treninga')
+      alert('Error saving workout')
     } finally {
       setSaving(false)
     }
@@ -43,7 +43,7 @@ export function GymTemplateCreator() {
 
   return (
     <PageLayout 
-      title="Novi Trening"
+      title="New Workout"
       showBack
       headerAction={
         <button
@@ -52,7 +52,7 @@ export function GymTemplateCreator() {
           className="px-4 py-2 bg-gym-orange hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg font-semibold transition-colors flex items-center gap-2"
         >
           <Save size={18} />
-          Sačuvaj
+          Save
         </button>
       }
     >
@@ -60,13 +60,13 @@ export function GymTemplateCreator() {
         <div className="bg-enduro-gray rounded-xl p-6 border border-gray-700 space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
-              Naziv treninga *
+              Workout Name *
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="npr. Upper Body A"
+              placeholder="e.g. Upper Body A"
               className="w-full px-4 py-3 bg-enduro-dark border border-gray-600 rounded-lg text-enduro-light focus:outline-none focus:border-gym-orange transition-colors text-lg"
               autoFocus
             />
@@ -74,12 +74,12 @@ export function GymTemplateCreator() {
 
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
-              Opis (opciono)
+              Description (optional)
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Fokus na grudi i ramena..."
+              placeholder="Chest and shoulders focus..."
               rows={3}
               className="w-full px-4 py-3 bg-enduro-dark border border-gray-600 rounded-lg text-enduro-light focus:outline-none focus:border-gym-orange transition-colors resize-none"
             />
@@ -88,7 +88,7 @@ export function GymTemplateCreator() {
 
         <div className="bg-blue-900/20 border border-blue-500 rounded-xl p-4">
           <p className="text-blue-400 text-sm">
-            💡 <strong>Tip:</strong> Nakon čuvanja dodaj vežbe iz baze podataka!
+            💡 <strong>Tip:</strong> Add exercises from the database after saving!
           </p>
         </div>
       </div>

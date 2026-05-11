@@ -17,7 +17,7 @@ export function SignupForm() {
     setError('')
 
     if (password.length < 6) {
-      setError('Password mora biti minimum 6 karaktera')
+      setError('Password must be at least 6 characters')
       return
     }
 
@@ -52,7 +52,7 @@ export function SignupForm() {
           onChange={(e) => setUsername(e.target.value)}
           required
           className="w-full px-4 py-3 bg-enduro-dark border border-gray-600 rounded-lg text-enduro-light focus:outline-none focus:border-run-cyan transition-colors"
-          placeholder="tvoje_ime"
+          placeholder="your_username"
         />
       </div>
 
@@ -67,7 +67,7 @@ export function SignupForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
           className="w-full px-4 py-3 bg-enduro-dark border border-gray-600 rounded-lg text-enduro-light focus:outline-none focus:border-run-cyan transition-colors"
-          placeholder="tvoj@email.com"
+          placeholder="your@email.com"
         />
       </div>
 
@@ -85,7 +85,7 @@ export function SignupForm() {
           className="w-full px-4 py-3 bg-enduro-dark border border-gray-600 rounded-lg text-enduro-light focus:outline-none focus:border-run-cyan transition-colors"
           placeholder="••••••••"
         />
-        <p className="text-xs text-gray-500 mt-1">Minimum 6 karaktera</p>
+        <p className="text-xs text-gray-500 mt-1">Minimum 6 characters</p>
       </div>
 
       <button
@@ -93,13 +93,13 @@ export function SignupForm() {
         disabled={loading}
         className="w-full bg-run-cyan hover:bg-teal-500 text-enduro-dark font-semibold py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {loading ? 'Kreiranje naloga...' : 'Kreiraj nalog'}
+        {loading ? 'Creating account...' : 'Create account'}
       </button>
 
       <p className="text-center text-gray-400 text-sm">
-        Već imaš account?{' '}
+        Already have an account?{' '}
         <Link to="/login" className="text-run-cyan hover:text-teal-400 font-medium">
-          Prijavi se
+          Log in
         </Link>
       </p>
     </form>
