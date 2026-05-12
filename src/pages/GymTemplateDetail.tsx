@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Play, Edit, Trash2, Dumbbell, TrendingUp } from 'lucide-react'
+import { Play, Edit, Trash2, Dumbbell, TrendingUp, Clock, Timer } from 'lucide-react'
 import { PageLayout } from '../components/layout/PageLayout'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
@@ -25,6 +25,12 @@ interface WorkoutTemplate {
   name: string
   description: string | null
   created_at: string
+  track_weight?: boolean
+  track_reps?: boolean
+  track_time?: boolean
+  track_distance?: boolean
+  auto_rest_timer?: boolean
+  default_rest_seconds?: number
 }
 
 export function GymTemplateDetail() {
@@ -107,7 +113,6 @@ export function GymTemplateDetail() {
   }
 
   function handleStartWorkout() {
-    // TODO: Navigate to live workout tracker
     navigate(`/gym/workout/${id}/start`)
   }
 
@@ -132,7 +137,7 @@ export function GymTemplateDetail() {
   }
 
   const totalSets = exercises.reduce((sum, ex) => sum + ex.target_sets, 0)
-  const estimatedTime = exercises.length * 5 // Rough estimate: 5 min per exercise
+  const estimatedTime = exercises.length * 5
 
   return (
     <PageLayout
@@ -178,39 +183,40 @@ export function GymTemplateDetail() {
               <p className="text-xs text-gray-500">Minutes</p>
             </div>
           </div>
-        {/* After stats cards, add settings info 
-        <div className="p-4">
+
+          {/* Tracking Settings Badge */}
+          {(template.track_weight || template.track_reps || template.track_time || template.auto_rest_timer) && (
             <div className="glass-card rounded-2xl p-4">
-                <h4 className="text-sm font-semibold text-gray-400 mb-3">Tracking</h4>
-                <div className="flex flex-wrap gap-2">
+              <h4 className="text-sm font-semibold text-gray-400 mb-3">Tracking</h4>
+              <div className="flex flex-wrap gap-2">
                 {template.track_weight && (
-                    <span className="flex items-center gap-1 px-3 py-1.5 bg-gym-orange/20 text-gym-orange rounded-lg text-sm font-medium">
+                  <span className="flex items-center gap-1 px-3 py-1.5 bg-gym-orange/20 text-gym-orange rounded-lg text-sm font-medium">
                     <Dumbbell size={14} />
                     Weight
-                    </span>
+                  </span>
                 )}
                 {template.track_reps && (
-                    <span className="flex items-center gap-1 px-3 py-1.5 bg-run-cyan/20 text-run-cyan rounded-lg text-sm font-medium">
+                  <span className="flex items-center gap-1 px-3 py-1.5 bg-run-cyan/20 text-run-cyan rounded-lg text-sm font-medium">
                     <TrendingUp size={14} />
                     Reps
-                    </span>
+                  </span>
                 )}
                 {template.track_time && (
-                    <span className="flex items-center gap-1 px-3 py-1.5 bg-accent-purple/20 text-accent-purple rounded-lg text-sm font-medium">
+                  <span className="flex items-center gap-1 px-3 py-1.5 bg-accent-purple/20 text-accent-purple rounded-lg text-sm font-medium">
                     <Clock size={14} />
                     Time
-                    </span>
+                  </span>
                 )}
-                {template.auto_rest_timer && (
-                    <span className="flex items-center gap-1 px-3 py-1.5 bg-success-green/20 text-success-green rounded-lg text-sm font-medium">
+                {template.auto_rest_timer && template.default_rest_seconds && (
+                  <span className="flex items-center gap-1 px-3 py-1.5 bg-success-green/20 text-success-green rounded-lg text-sm font-medium">
                     <Timer size={14} />
                     Rest Timer ({Math.floor(template.default_rest_seconds / 60)}:{(template.default_rest_seconds % 60).toString().padStart(2, '0')})
-                    </span>
+                  </span>
                 )}
-                </div>
+              </div>
             </div>
-        </div>
-*/}
+          )}
+
           {/* Start Workout Button */}
           <button
             onClick={handleStartWorkout}
@@ -269,7 +275,7 @@ export function GymTemplateDetail() {
             )}
           </div>
 
-          {/* Description (if exists) */}
+          {/* Description */}
           {template.description && (
             <div className="glass-card rounded-2xl p-4 mt-6">
               <h3 className="text-sm font-semibold text-gray-400 mb-2">Description</h3>

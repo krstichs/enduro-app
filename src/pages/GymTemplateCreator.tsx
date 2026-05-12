@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Save, ChevronRight } from 'lucide-react'
 import { PageLayout } from '../components/layout/PageLayout'
-import { WorkoutSettings } from '../components/gym/WorkoutSettings'
+import WorkoutSettings from '../components/gym/WorkoutSettings'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 
