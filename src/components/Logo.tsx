@@ -5,14 +5,14 @@ interface LogoProps {
 
 export function Logo({ variant = 'dark', className = '' }: LogoProps) {
   const logoSrc = variant === 'light' 
-    ? '/src/assets/logo-light.png' 
-    : '/src/assets/logo-dark.png'
+    ? '/logo-light.png' 
+    : '/logo-dark.png'
 
   return (
     <img 
       src={logoSrc} 
       alt="Enduro" 
-      className={`h-8 ${className}`}
+      className={className || 'h-8'}
     />
   )
 }

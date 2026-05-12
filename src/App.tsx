@@ -6,6 +6,7 @@ import { Dashboard } from './pages/Dashboard'
 import { GymTemplates } from './pages/GymTemplates'
 import { GymTemplateCreator } from './pages/GymTemplateCreator'
 import { GymTemplateEditor } from './pages/GymTemplateEditor'
+import { GymTemplateDetail } from './pages/GymTemplateDetail'
 
 
 // Protected Route wrapper
@@ -88,7 +89,15 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
-
+      
+      <Route
+        path="/gym/template/:id"
+        element={
+          <ProtectedRoute>
+            <GymTemplateDetail />
+          </ProtectedRoute>
+        }
+      />
 
             <Route
         path="/gym/template/:id/edit"
