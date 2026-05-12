@@ -29,6 +29,8 @@ export function GymTemplateEditor() {
   const [exercises, setExercises] = useState<TemplateExercise[]>([])
   const [showSelector, setShowSelector] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [template, setTemplate] = useState<any>(null)
+
 
   useEffect(() => {
     if (id) {
@@ -37,18 +39,18 @@ export function GymTemplateEditor() {
   }, [id])
 
   async function fetchTemplate() {
-    if (!id) return
+     if (!id) return   
 
     try {
-      // Fetch template
-      const { data: template, error: templateError } = await supabase
+        // Fetch template WITH settings
+        const { data: templateData, error: templateError } = await supabase
         .from('workout_templates')
         .select('*')
         .eq('id', id)
         .single()
 
-      if (templateError) throw templateError
-      setTemplateName(template.name)
+        if (templateError) throw templateError
+    setTemplate(templateData)
 
       // Fetch exercises
       const { data: templateExercises, error: exercisesError } = await supabase
@@ -208,6 +210,25 @@ export function GymTemplateEditor() {
                               min="1"
                             />
                           </div>
+
+                        {/* Tracking Options */}
+                        <div className="flex flex-wrap gap-2 mt-3">
+                            {template?.track_weight && (
+                                <span className="px-2 py-1 bg-gym-orange/20 text-gym-orange text-xs rounded-lg font-medium">
+                                Weight
+                                </span>
+                            )}
+                            {template?.track_reps && (
+                                <span className="px-2 py-1 bg-run-cyan/20 text-run-cyan text-xs rounded-lg font-medium">
+                                Reps
+                                </span>
+                            )}
+                            {template?.track_time && (
+                                <span className="px-2 py-1 bg-accent-purple/20 text-accent-purple text-xs rounded-lg font-medium">
+                                Time
+                                </span>
+                            )}
+                        </div>
 
                           <div className="flex items-center gap-2">
                             <label className="text-sm text-gray-400">Reps:</label>

@@ -178,7 +178,39 @@ export function GymTemplateDetail() {
               <p className="text-xs text-gray-500">Minutes</p>
             </div>
           </div>
-
+        {/* After stats cards, add settings info 
+        <div className="p-4">
+            <div className="glass-card rounded-2xl p-4">
+                <h4 className="text-sm font-semibold text-gray-400 mb-3">Tracking</h4>
+                <div className="flex flex-wrap gap-2">
+                {template.track_weight && (
+                    <span className="flex items-center gap-1 px-3 py-1.5 bg-gym-orange/20 text-gym-orange rounded-lg text-sm font-medium">
+                    <Dumbbell size={14} />
+                    Weight
+                    </span>
+                )}
+                {template.track_reps && (
+                    <span className="flex items-center gap-1 px-3 py-1.5 bg-run-cyan/20 text-run-cyan rounded-lg text-sm font-medium">
+                    <TrendingUp size={14} />
+                    Reps
+                    </span>
+                )}
+                {template.track_time && (
+                    <span className="flex items-center gap-1 px-3 py-1.5 bg-accent-purple/20 text-accent-purple rounded-lg text-sm font-medium">
+                    <Clock size={14} />
+                    Time
+                    </span>
+                )}
+                {template.auto_rest_timer && (
+                    <span className="flex items-center gap-1 px-3 py-1.5 bg-success-green/20 text-success-green rounded-lg text-sm font-medium">
+                    <Timer size={14} />
+                    Rest Timer ({Math.floor(template.default_rest_seconds / 60)}:{(template.default_rest_seconds % 60).toString().padStart(2, '0')})
+                    </span>
+                )}
+                </div>
+            </div>
+        </div>
+*/}
           {/* Start Workout Button */}
           <button
             onClick={handleStartWorkout}
