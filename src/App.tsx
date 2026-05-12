@@ -5,6 +5,8 @@ import { Signup } from './pages/Signup'
 import { Dashboard } from './pages/Dashboard'
 import { GymTemplates } from './pages/GymTemplates'
 import { GymTemplateCreator } from './pages/GymTemplateCreator'
+import { GymTemplateEditor } from './pages/GymTemplateEditor'
+
 
 // Protected Route wrapper
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -83,6 +85,16 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <GymTemplateCreator />
+          </ProtectedRoute>
+        }
+      />
+
+
+            <Route
+        path="/gym/template/:id/edit"
+        element={
+          <ProtectedRoute>
+            <GymTemplateEditor />
           </ProtectedRoute>
         }
       />
