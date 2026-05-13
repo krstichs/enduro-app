@@ -7,7 +7,7 @@ import { GymTemplates } from './pages/GymTemplates'
 import { GymTemplateCreator } from './pages/GymTemplateCreator'
 import { GymTemplateEditor } from './pages/GymTemplateEditor'
 import { GymTemplateDetail } from './pages/GymTemplateDetail'
-
+import { GymWorkoutTracker } from './pages/GymWorkoutTracker'
 
 // Protected Route wrapper
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -107,7 +107,21 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+
+        <Route
+        path="/gym/workout/:id/start"
+        element={
+          <ProtectedRoute>
+            <GymWorkoutTracker />
+          </ProtectedRoute>
+        }
+      />
+
     </Routes>
+
+    
+
+    
   )
 }
 
