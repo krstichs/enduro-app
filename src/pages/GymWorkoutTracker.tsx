@@ -99,8 +99,24 @@ export function GymWorkoutTracker() {
   }
 
   async function handleWorkoutComplete() {
-    // Navigate to completion screen
-    navigate(`/gym/workout/${id}/complete`, { state: { session } })
+    console.log('🎉 Workout Complete!', {
+      session,
+      id,
+      hasSession: !!session,
+    })
+    
+    if (!session) {
+      console.error('❌ Session is null!')
+      return
+    }
+    const sessionData = {
+      ...session,
+      started_at: session.started_at.toISOString(), // Convert Date to string
+    }
+    
+    navigate(`/gym/workout/${id}/complete`, { 
+      state: { session } 
+    })
   }
 
   function handleQuit() {
