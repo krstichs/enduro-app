@@ -5,8 +5,8 @@ interface LogoProps {
 
 export function Logo({ variant = 'dark', className = '' }: LogoProps) {
   const logoSrc = variant === 'light' 
-    ? '/logo-light.png' 
-    : '/logo-dark.png'
+    ? '../logo-light.png' 
+    : '../logo-dark.png'
 
   return (
     <img 
