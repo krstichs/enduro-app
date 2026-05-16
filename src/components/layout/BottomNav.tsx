@@ -1,16 +1,28 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Home, Dumbbell, Activity, User } from 'lucide-react'
 import { cn } from '../../lib/utils'
-
-const navItems = [
-  { icon: Home, label: 'Home', path: '/dashboard' },
-  { icon: Dumbbell, label: 'Gym', path: '/gym' },
-  { icon: Activity, label: 'Run', path: '/running' },
-  { icon: User, label: 'Profil', path: '/profile' },
-]
+import { usePreferences } from '../../hooks/usePreferences'
 
 export function BottomNav() {
   const location = useLocation()
+  const { preferences } = usePreferences()
+
+  const navItems = [
+    { icon: Home, label: 'Home', path: '/dashboard', enabled: true },
+    { 
+      icon: Dumbbell, 
+      label: 'Gym', 
+      path: '/gym', 
+      enabled: preferences?.gym_enabled ?? true 
+    },
+    { 
+      icon: Activity, 
+      label: 'Run', 
+      path: '/running', 
+      enabled: preferences?.running_enabled ?? true 
+    },
+    { icon: User, label: 'Profile', path: '/profile', enabled: true },
+  ].filter(item => item.enabled) // Hide disabled items
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-enduro-gray/80 backdrop-blur-xl border-t border-white/5 px-4 py-2 safe-area-bottom md:hidden z-50">
@@ -24,7 +36,6 @@ export function BottomNav() {
               to={path}
               className="relative flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all active:scale-95"
             >
-              {/* Active Indicator */}
               {isActive && (
                 <div className="absolute inset-0 bg-gym-gradient opacity-10 rounded-xl" />
               )}

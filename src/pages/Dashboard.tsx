@@ -2,6 +2,8 @@ import { useAuth } from '../contexts/AuthContext'
 import { PageLayout } from '../components/layout/PageLayout'
 import { Dumbbell, Activity, Flame, TrendingUp, Calendar, Clock } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { Settings as SettingsIcon } from 'lucide-react'
+
 
 export function Dashboard() {
   const { user } = useAuth()
@@ -10,7 +12,17 @@ export function Dashboard() {
   const username = user?.user_metadata?.username || 'Warrior'
 
   return (
-    <PageLayout showBottomNav>
+    <PageLayout 
+      showBottomNav
+      headerAction={
+        <button
+          onClick={() => navigate('/settings')}
+          className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+        >
+          <SettingsIcon size={24} />
+        </button>
+      }
+    >
       <div className="min-h-screen bg-gradient-to-b from-enduro-darker via-enduro-dark to-enduro-darker">
         {/* Hero Section */}
         <div className="relative px-4 pt-6 pb-8">

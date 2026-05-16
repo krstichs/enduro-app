@@ -9,6 +9,7 @@ import { GymTemplateEditor } from './pages/GymTemplateEditor'
 import { GymTemplateDetail } from './pages/GymTemplateDetail'
 import { GymWorkoutTracker } from './pages/GymWorkoutTracker'
 import { GymWorkoutComplete } from './pages/GymWorkoutComplete'
+import { Settings } from './pages/Settings'
 
 
 
@@ -125,6 +126,15 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <GymWorkoutComplete />
+          </ProtectedRoute>
+        }
+      />
+      
+        <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <Settings />
           </ProtectedRoute>
         }
       />
