@@ -10,6 +10,7 @@ import { GymTemplateDetail } from './pages/GymTemplateDetail'
 import { GymWorkoutTracker } from './pages/GymWorkoutTracker'
 import { GymWorkoutComplete } from './pages/GymWorkoutComplete'
 import { Settings } from './pages/Settings'
+import { Profile } from './pages/Profile'
 
 
 
@@ -103,7 +104,7 @@ function AppRoutes() {
         }
       />
 
-            <Route
+      <Route
         path="/gym/template/:id/edit"
         element={
           <ProtectedRoute>
@@ -112,7 +113,7 @@ function AppRoutes() {
         }
       />
 
-        <Route
+      <Route
         path="/gym/workout/:id/start"
         element={
           <ProtectedRoute>
@@ -130,7 +131,7 @@ function AppRoutes() {
         }
       />
       
-        <Route
+      <Route
         path="/settings"
         element={
           <ProtectedRoute>
@@ -139,6 +140,14 @@ function AppRoutes() {
         }
       />
 
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
 
     
