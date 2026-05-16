@@ -167,50 +167,45 @@ export function Settings() {
           <div className="glass-card rounded-2xl p-6">
             <h3 className="text-lg font-bold mb-4">Activity Tracking</h3>
             <div className="space-y-4">
-              
               {/* Gym Toggle */}
-              <label className="flex items-center justify-between cursor-pointer">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gym-orange/20 rounded-lg flex items-center justify-center">
-                    <Dumbbell size={20} className="text-gym-orange" />
-                  </div>
-                  <div>
-                    <p className="font-semibold">Gym Workouts</p>
-                    <p className="text-sm text-gray-400">Track strength training</p>
-                  </div>
+            <label className="flex items-center justify-between cursor-pointer p-2 hover:bg-white/5 rounded-2xl transition-colors">
+            <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gym-orange/20 rounded-lg flex items-center justify-center">
+                <Dumbbell size={20} className="text-gym-orange" />
                 </div>
-                <input
-                  type="checkbox"
-                  checked={preferences.gym_enabled}
-                  onChange={(e) => updatePreference('gym_enabled', e.target.checked)}
-                  className="w-12 h-6 appearance-none bg-white/10 rounded-full relative cursor-pointer transition-colors checked:bg-gym-gradient"
-                  style={{
-                    boxShadow: preferences.gym_enabled ? '0 0 10px rgba(255,107,53,0.3)' : 'none'
-                  }}
-                />
-              </label>
+                <div>
+                <p className="font-semibold">Gym Workouts</p>
+                <p className="text-sm text-gray-400">Track strength training</p>
+                </div>
+            </div>
+            <input
+                type="checkbox"
+                checked={preferences.gym_enabled}
+                onChange={(e) => updatePreference('gym_enabled', e.target.checked)}
+                className="w-12 h-6 appearance-none bg-neutral-800 checked:bg-gym-orange rounded-full relative cursor-pointer transition-colors duration-200 focus:outline-none
+                after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:w-4 after:h-4 after:bg-gray-500 checked:after:bg-white after:rounded-full after:transition-transform after:duration-200 checked:after:translate-x-6"
+            />
+            </label>
 
-              {/* Running Toggle */}
-              <label className="flex items-center justify-between cursor-pointer">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-run-cyan/20 rounded-lg flex items-center justify-center">
-                    <Activity size={20} className="text-run-cyan" />
-                  </div>
-                  <div>
-                    <p className="font-semibold">Running</p>
-                    <p className="text-sm text-gray-400">Track cardio & runs</p>
-                  </div>
+            {/* Running Toggle */}
+            <label className="flex items-center justify-between cursor-pointer p-2 hover:bg-white/5 rounded-2xl transition-colors">
+            <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-run-cyan/20 rounded-lg flex items-center justify-center">
+                <Activity size={20} className="text-run-cyan" />
                 </div>
-                <input
-                  type="checkbox"
-                  checked={preferences.running_enabled}
-                  onChange={(e) => updatePreference('running_enabled', e.target.checked)}
-                  className="w-12 h-6 appearance-none bg-white/10 rounded-full relative cursor-pointer transition-colors checked:bg-run-gradient"
-                  style={{
-                    boxShadow: preferences.running_enabled ? '0 0 10px rgba(0,217,255,0.3)' : 'none'
-                  }}
-                />
-              </label>
+                <div>
+                <p className="font-semibold">Running</p>
+                <p className="text-sm text-gray-400">Track cardio & runs</p>
+                </div>
+            </div>
+            <input
+                type="checkbox"
+                checked={preferences.running_enabled}
+                onChange={(e) => updatePreference('running_enabled', e.target.checked)}
+                className="w-12 h-6 appearance-none bg-neutral-800 checked:bg-run-cyan rounded-full relative cursor-pointer transition-colors duration-200 focus:outline-none
+                after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:w-4 after:h-4 after:bg-gray-500 checked:after:bg-white after:rounded-full after:transition-transform after:duration-200 checked:after:translate-x-6"
+            />
+            </label>
 
               {!preferences.gym_enabled && !preferences.running_enabled && (
                 <div className="bg-red-900/20 border border-red-500/30 rounded-xl p-3 text-sm text-red-400">
@@ -221,71 +216,76 @@ export function Settings() {
           </div>
 
           {/* Units */}
-          <div className="glass-card rounded-2xl p-6">
+            <div className="glass-card rounded-2xl p-6">
             <h3 className="text-lg font-bold mb-4">Units</h3>
-            <div className="space-y-4">
-              
-              {/* Weight Units */}
-              <div>
-                <label className="flex items-center gap-3 mb-3">
-                  <Scale size={20} className="text-gray-400" />
-                  <span className="font-semibold">Weight</span>
+            <div className="space-y-5">
+                
+                {/* Weight Units */}
+                <div>
+                <label className="flex items-center gap-3 mb-2.5">
+                    <Scale size={20} className="text-gray-400" />
+                    <span className="font-semibold text-sm text-gray-300">Weight</span>
                 </label>
-                <div className="flex gap-2">
-                  <button
+                <div className="flex bg-neutral-900/90 p-1 rounded-xl gap-1 border border-white/5">
+                    <button
+                    type="button"
                     onClick={() => updatePreference('units_weight', 'kg')}
-                    className={`flex-1 py-3 rounded-xl font-semibold transition-all ${
-                      preferences.units_weight === 'kg'
-                        ? 'bg-gym-gradient text-white'
-                        : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                    className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 border ${
+                        preferences.units_weight === 'kg'
+                        ? 'border-gym-orange text-gym-orange bg-transparent shadow-sm'
+                        : 'border-transparent text-neutral-400 hover:text-white hover:bg-white/5'
                     }`}
-                  >
+                    >
                     Kilograms (kg)
-                  </button>
-                  <button
+                    </button>
+                    <button
+                    type="button"
                     onClick={() => updatePreference('units_weight', 'lbs')}
-                    className={`flex-1 py-3 rounded-xl font-semibold transition-all ${
-                      preferences.units_weight === 'lbs'
-                        ? 'bg-gym-gradient text-white'
-                        : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                    className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 border ${
+                        preferences.units_weight === 'lbs'
+                        ? 'border-gym-orange text-gym-orange bg-transparent shadow-sm'
+                        : 'border-transparent text-neutral-400 hover:text-white hover:bg-white/5'
                     }`}
-                  >
+                    >
                     Pounds (lbs)
-                  </button>
+                    </button>
                 </div>
-              </div>
+                </div>
 
-              {/* Distance Units */}
-              <div>
-                <label className="flex items-center gap-3 mb-3">
-                  <Map size={20} className="text-gray-400" />
-                  <span className="font-semibold">Distance</span>
+                {/* Distance Units */}
+                <div>
+                <label className="flex items-center gap-3 mb-2.5">
+                    <Map size={20} className="text-gray-400" />
+                    <span className="font-semibold text-sm text-gray-300">Distance</span>
                 </label>
-                <div className="flex gap-2">
-                  <button
+                <div className="flex bg-neutral-900/90 p-1 rounded-xl gap-1 border border-white/5">
+                    <button
+                    type="button"
                     onClick={() => updatePreference('units_distance', 'km')}
-                    className={`flex-1 py-3 rounded-xl font-semibold transition-all ${
-                      preferences.units_distance === 'km'
-                        ? 'bg-run-gradient text-enduro-dark'
-                        : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                    className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 border ${
+                        preferences.units_distance === 'km'
+                        ? 'border-run-cyan text-run-cyan bg-transparent shadow-sm'
+                        : 'border-transparent text-neutral-400 hover:text-white hover:bg-white/5'
                     }`}
-                  >
+                    >
                     Kilometers (km)
-                  </button>
-                  <button
+                    </button>
+                    <button
+                    type="button"
                     onClick={() => updatePreference('units_distance', 'miles')}
-                    className={`flex-1 py-3 rounded-xl font-semibold transition-all ${
-                      preferences.units_distance === 'miles'
-                        ? 'bg-run-gradient text-enduro-dark'
-                        : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                    className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 border ${
+                        preferences.units_distance === 'miles'
+                        ? 'border-run-cyan text-run-cyan bg-transparent shadow-sm'
+                        : 'border-transparent text-neutral-400 hover:text-white hover:bg-white/5'
                     }`}
-                  >
+                    >
                     Miles (mi)
-                  </button>
+                    </button>
                 </div>
-              </div>
+                </div>
+
             </div>
-          </div>
+            </div>
 
           {/* Logout Button */}
           <button
