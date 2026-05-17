@@ -99,46 +99,51 @@ export function GymTemplates() {
               </button>
             </div>
           ) : (
-            templates.map((template, index) => (
-              <button
-                key={template.id}
-                onClick={() => navigate(`/gym/template/${template.id}`)}
-                className="w-full group animate-slide-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="relative overflow-hidden rounded-2xl">
-                  {/* Hover Glow */}
-                  <div className="absolute inset-0 bg-gym-gradient opacity-0 group-hover:opacity-10 transition-opacity blur-xl" />
-                  
-                  <div className="glass-card p-5 group-active:scale-98 transition-all duration-200">
-                    <div className="flex items-center gap-4">
-                      <div className="relative flex-shrink-0">
-                        <div className="absolute inset-0 bg-gym-orange/30 rounded-xl blur-lg" />
-                        <div className="relative w-14 h-14 bg-gym-gradient rounded-xl flex items-center justify-center">
-                          <Dumbbell size={24} strokeWidth={2.5} />
-                        </div>
+          templates.map((template, index) => (
+            <button
+              key={template.id}
+              onClick={() => navigate(`/gym/template/${template.id}`)}
+              className="w-full group animate-slide-up text-left block"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
+              <div className="relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-300 group-active:scale-[0.99]">
+                {/* Glow koji se pali na hover */}
+                <div className="absolute inset-0 bg-gym-gradient opacity-0 group-hover:opacity-[0.04] transition-opacity duration-300" />
+                
+                {/* Leva svetleća linija obeleživač */}
+                <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gym-gradient opacity-70 group-hover:opacity-100 transition-opacity" />
+
+                <div className="glass-card p-5">
+                  <div className="flex items-center gap-4">
+                    <div className="relative flex-shrink-0">
+                      <div className="absolute inset-0 bg-gym-orange/20 rounded-xl blur-md group-hover:blur-lg transition-all" />
+                      <div className="relative w-12 h-12 bg-gym-gradient rounded-xl flex items-center justify-center text-white shadow-[0_0_15px_rgba(255,114,0,0.2)]">
+                        <Dumbbell size={20} strokeWidth={2.5} />
                       </div>
-                      
-                      <div className="flex-1 text-left min-w-0">
-                        <h3 className="font-bold text-lg mb-1 truncate">{template.name}</h3>
-                        <div className="flex items-center gap-4 text-sm text-gray-400">
-                          <span className="flex items-center gap-1">
-                            <TrendingUp size={14} />
-                            12 exercises
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Clock size={14} />
-                            ~45 min
-                          </span>
-                        </div>
-                      </div>
-                      
-                      <ChevronRight className="text-gray-600 flex-shrink-0 group-hover:text-gym-orange transition-colors" size={20} />
                     </div>
+                    
+                    <div className="flex-1 min-w-0 pl-1">
+                      <h3 className="font-bold text-lg text-white mb-1 group-hover:text-gym-orange transition-colors truncate">
+                        {template.name}
+                      </h3>
+                      <div className="flex items-center gap-4 text-xs font-medium text-gray-400">
+                        <span className="flex items-center gap-1.5">
+                          <TrendingUp size={13} className="text-gym-orange/70" />
+                          12 exercises
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <Clock size={13} className="text-gym-orange/70" />
+                          ~45 min
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <ChevronRight className="text-gray-600 flex-shrink-0 group-hover:text-gym-orange group-hover:translate-x-0.5 transition-all" size={18} />
                   </div>
                 </div>
-              </button>
-            ))
+              </div>
+            </button>
+          ))
           )}
         </div>
       </div>

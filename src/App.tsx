@@ -11,6 +11,9 @@ import { GymWorkoutTracker } from './pages/GymWorkoutTracker'
 import { GymWorkoutComplete } from './pages/GymWorkoutComplete'
 import { Settings } from './pages/Settings'
 import { Profile } from './pages/Profile'
+import { RunningTemplates } from './pages/RunningTemplates'
+import { RunningTemplateCreator } from './pages/RunningTemplateCreator'
+import { QuickLogRun } from './pages/QuickLogRun'
 
 
 
@@ -145,6 +148,33 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <Profile />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/running"
+        element={
+          <ProtectedRoute>
+            <RunningTemplates />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/running/new"
+        element={
+          <ProtectedRoute>
+            <RunningTemplateCreator />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/running/log"
+        element={
+          <ProtectedRoute>
+            <QuickLogRun />
           </ProtectedRoute>
         }
       />

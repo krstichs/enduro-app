@@ -79,7 +79,7 @@ export function GymTemplateCreator() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Push Day"
-                className="input-field text-lg"
+                className="w-full px-4 py-3 bg-white/[0.02] border border-white/10 rounded-xl text-white text-lg font-semibold placeholder:text-gray-600 focus:outline-none focus:border-gym-orange/50 focus:shadow-[0_0_15px_rgba(255,114,0,0.1)] transition-all"
                 autoFocus
               />
             </div>
