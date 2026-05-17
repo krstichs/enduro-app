@@ -8,6 +8,7 @@ export function SignupForm() {
   const [username, setUsername] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [isRegistered, setIsRegistered] = useState(false) // Prati da li je uspešno poslat mejl
   
   const { signUp } = useAuth()
   const navigate = useNavigate()
@@ -25,12 +26,37 @@ export function SignupForm() {
 
     const { error } = await signUp(email, password, username)
 
+    setLoading(false)
+
     if (error) {
       setError(error.message)
-      setLoading(false)
     } else {
-      navigate('/dashboard')
+      // Pošto je uključen email confirmation, ne idemo na dashboard 
+      // nego palimo stanje za prikaz uspešne registracije
+      setIsRegistered(true)
     }
+  }
+
+  // Ekran koji se prikazuje kada uspešno prođe signUp, a čeka se potvrda sa mejla
+  if (isRegistered) {
+    return (
+      <div className="glass-card rounded-2xl p-6 border border-run-cyan/30 text-center space-y-4 animate-fade-in bg-white/[0.01]">
+        <div className="w-16 h-16 bg-run-cyan/10 border border-run-cyan/30 rounded-full flex items-center justify-center mx-auto text-2xl shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+          ✉️
+        </div>
+        <h3 className="text-xl font-black text-white uppercase tracking-wider">Check your email!</h3>
+        <p className="text-gray-400 text-sm leading-relaxed">
+          We've sent a confirmation link to <span className="text-run-cyan font-semibold">{email}</span>. 
+          Please click the link in the email to activate your account.
+        </p>
+        <Link 
+          to="/login" 
+          className="block w-full bg-run-cyan hover:bg-teal-500 text-enduro-dark font-bold py-3 rounded-lg transition-colors text-center mt-6"
+        >
+          Go to Login Screen
+        </Link>
+      </div>
+    )
   }
 
   return (
@@ -85,7 +111,7 @@ export function SignupForm() {
           className="w-full px-4 py-3 bg-enduro-dark border border-gray-600 rounded-lg text-enduro-light focus:outline-none focus:border-run-cyan transition-colors"
           placeholder="••••••••"
         />
-        <p className="text-xs text-gray-500 mt-1">Minimum 6 characters</p>
+          <p className="text-xs text-gray-500 mt-1">Minimum 6 characters</p>
       </div>
 
       <button

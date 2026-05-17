@@ -51,18 +51,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       options: {
         data: {
           username,
+          full_name: username, // Pakujemo u metapodatke da bi ih Trigger pokupio
         },
       },
     })
-
-    // Kreiraj profil
-    if (data.user) {
-      await supabase.from('profiles').insert({
-        id: data.user.id,
-        username,
-        full_name: username,
-      })
-    }
 
     return { error }
   }
