@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Save, LogOut, Dumbbell, Activity, Scale, Map } from 'lucide-react'
+import { Save, LogOut, Dumbbell, Activity, Scale, Map, ChevronRight } from 'lucide-react'
 import { PageLayout } from '../components/layout/PageLayout'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
@@ -286,7 +286,24 @@ export function Settings() {
 
             </div>
             </div>
+          {/* Admin Panel Link (after Units section, before Logout) */}
+          <button
+            onClick={() => navigate('/admin')}
+            className="w-full glass-card rounded-2xl p-4 flex items-center justify-between hover:bg-white/10 transition-colors active:scale-98"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-accent-purple/20 rounded-lg flex items-center justify-center">
+                <span className="text-xl">👑</span>
+              </div>
+              <div className="text-left">
+                <p className="font-semibold">Admin Panel</p>
+                <p className="text-sm text-gray-400">View users & stats</p>
+              </div>
+            </div>
+            <ChevronRight size={20} className="text-gray-400" />
+          </button>
 
+          
           {/* Logout Button */}
           <button
             onClick={handleLogout}

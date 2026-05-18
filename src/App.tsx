@@ -15,7 +15,8 @@ import { RunningTemplates } from './pages/RunningTemplates'
 import { RunningTemplateCreator } from './pages/RunningTemplateCreator'
 import { QuickLogRun } from './pages/QuickLogRun'
 import { WorkoutDetail } from './pages/WorkoutDetail'
-
+import { Admin } from './pages/Admin'
+import { RunningDetail } from './pages/RunningDetail'
 
 
 // Protected Route wrapper
@@ -185,6 +186,24 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <WorkoutDetail />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <Admin />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/running/session/:id"
+        element={
+          <ProtectedRoute>
+            <RunningDetail />
           </ProtectedRoute>
         }
       />

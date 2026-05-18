@@ -137,11 +137,15 @@ export function WorkoutHistoryList({ limit = 10 }: WorkoutHistoryListProps) {
         </div>
       ) : (
         sessions.map((session) => (
-          <button
-            key={session.id}
-            onClick={() => navigate(`/workout/${session.id}`)}
-            className="w-full glass-card rounded-2xl p-4 hover:bg-white/10 transition-all active:scale-98 text-left"
-          >
+        <button
+          key={session.id}
+          onClick={() => navigate(
+            session.workout_type_id === 1 
+              ? `/workout/${session.id}` 
+              : `/running/session/${session.id}`
+          )}
+          className="w-full glass-card rounded-2xl p-4 hover:bg-white/10 transition-all active:scale-98 text-left"
+        >
             <div className="flex items-start gap-4">
               {/* Icon */}
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
