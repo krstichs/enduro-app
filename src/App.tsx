@@ -14,6 +14,7 @@ import { Profile } from './pages/Profile'
 import { RunningTemplates } from './pages/RunningTemplates'
 import { RunningTemplateCreator } from './pages/RunningTemplateCreator'
 import { QuickLogRun } from './pages/QuickLogRun'
+import { WorkoutDetail } from './pages/WorkoutDetail'
 
 
 
@@ -175,6 +176,15 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <QuickLogRun />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/workout/:id"
+        element={
+          <ProtectedRoute>
+            <WorkoutDetail />
           </ProtectedRoute>
         }
       />
