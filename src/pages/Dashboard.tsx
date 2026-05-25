@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { PageLayout } from '../components/layout/PageLayout'
-import { Dumbbell, Activity, Flame, TrendingUp, Clock, Settings as SettingsIcon } from 'lucide-react'
+import { Dumbbell, Activity, Flame, TrendingUp, Clock, Settings as SettingsIcon, Plus, Calendar, Play } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { SkeletonCard, SkeletonStats } from '../components/ui/Skeleton'
 
 interface DashboardStats {
   streak: number
@@ -302,13 +303,71 @@ export function Dashboard() {
           </div>
         </div>
 
-        {/* Recent Activity */}
+
+        {/* Quick Start */}
+        <div className="px-4 mb-6">
+          <h2 className="text-xl font-bold mb-4">Quick Start</h2>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              onClick={() => navigate('/gym/new')}
+              className="glass-card rounded-2xl p-4 hover:bg-white/10 transition-all active:scale-98"
+            >
+              <div className="w-12 h-12 bg-gym-orange/20 rounded-xl flex items-center justify-center mb-3 mx-auto">
+                <Plus size={24} className="text-gym-orange" />
+              </div>
+              <p className="font-semibold text-sm">New Workout</p>
+              <p className="text-xs text-gray-500 mt-1">Create template</p>
+            </button>
+
+            <button
+              onClick={() => navigate('/running/log')}
+              className="glass-card rounded-2xl p-4 hover:bg-white/10 transition-all active:scale-98"
+            >
+              <div className="w-12 h-12 bg-run-cyan/20 rounded-xl flex items-center justify-center mb-3 mx-auto">
+                <Activity size={24} className="text-run-cyan" />
+              </div>
+              <p className="font-semibold text-sm">Log Run</p>
+              <p className="text-xs text-gray-500 mt-1">Quick entry</p>
+            </button>
+
+            {stats.gymTemplatesCount > 0 && (
+              <button
+                onClick={() => navigate('/gym')}
+                className="glass-card rounded-2xl p-4 hover:bg-white/10 transition-all active:scale-98"
+              >
+                <div className="w-12 h-12 bg-success-green/20 rounded-xl flex items-center justify-center mb-3 mx-auto">
+                  <Play size={24} className="text-success-green" fill="currentColor" />
+                </div>
+                <p className="font-semibold text-sm">Start Template</p>
+                <p className="text-xs text-gray-500 mt-1">{stats.gymTemplatesCount} saved</p>
+              </button>
+            )}
+
+            <button
+              onClick={() => navigate('/profile')}
+              className="glass-card rounded-2xl p-4 hover:bg-white/10 transition-all active:scale-98"
+            >
+              <div className="w-12 h-12 bg-accent-purple/20 rounded-xl flex items-center justify-center mb-3 mx-auto">
+                <Calendar size={24} className="text-accent-purple" />
+              </div>
+              <p className="font-semibold text-sm">View Progress</p>
+              <p className="text-xs text-gray-500 mt-1">See calendar</p>
+            </button>
+          </div>
+        </div>
+{/* Recent Activity */}
         <div className="px-4 pb-24">
           <h2 className="text-xl font-bold mb-4">Recent Activity</h2>
           
           {loading ? (
-            <div className="text-center py-8">
-              <div className="w-8 h-8 border-4 border-gym-orange/30 border-t-gym-orange rounded-full animate-spin mx-auto" />
+            <div className="space-y-6">
+              {/* Ako treba da se prikaže i SkeletonStats ovde, stavi ga. Ako ne, obriši ga. */}
+              {/* <SkeletonStats /> */}
+              <div className="space-y-3">
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+              </div>
             </div>
           ) : stats.recentSessions.length === 0 ? (
             <div className="text-center py-12 glass-card rounded-2xl">

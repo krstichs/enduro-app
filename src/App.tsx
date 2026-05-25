@@ -17,7 +17,8 @@ import { QuickLogRun } from './pages/QuickLogRun'
 import { WorkoutDetail } from './pages/WorkoutDetail'
 import { Admin } from './pages/Admin'
 import { RunningDetail } from './pages/RunningDetail'
-
+import { ToastProvider } from './contexts/ToastContext'
+import React from 'react';
 
 // Protected Route wrapper
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -218,11 +219,15 @@ function AppRoutes() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <AppRoutes />
-      </AuthProvider>
-    </BrowserRouter>
+    <React.StrictMode>
+      <BrowserRouter> {/* <-- 2. OVO vraća ruter i rešava crni ekran! */}
+        <AuthProvider>
+          <ToastProvider>
+            <AppRoutes />
+          </ToastProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </React.StrictMode>
   )
 }
 

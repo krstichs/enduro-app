@@ -5,16 +5,15 @@ import { PageLayout } from '../components/layout/PageLayout'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import type { WorkoutSession } from '../lib/workoutSession'
+import { useToast } from '../contexts/ToastContext'
 
 export function GymWorkoutComplete() {
   const navigate = useNavigate()
   const location = useLocation()
   const { user } = useAuth()
-  
-  console.log('📦 Received location.state:', location.state)
+  const { showToast } = useToast()
   
   const session = location.state?.session as WorkoutSession | undefined
-  console.log('📦 Session:', session)
 
   const [rating, setRating] = useState<number>(0)
   const [effort, setEffort] = useState<number>(5)
@@ -57,33 +56,35 @@ export function GymWorkoutComplete() {
 
   async function handleSave() {
     if (!user || rating === 0) {
-      alert('Please rate your workout!')
+      showToast('Please rate your workout!', 'warning')
       return
     }
+
+    if (!session) return
 
     setSaving(true)
 
     try {
       const { data: workoutSession, error: sessionError } = await supabase
-          .from('workout_sessions')
-          .insert({
-              user_id: user.id,
-              template_id: session!.template_id,
-              workout_type_id: 1,
-              date: typeof session!.started_at === 'string' 
-              ? session!.started_at 
-              : session!.started_at.toISOString(),
-              duration: duration * 60,
-              rating,
-              perceived_effort: effort,
-              notes: notes.trim() || null,
-          })
-          .select()
-          .single()
+        .from('workout_sessions')
+        .insert({
+          user_id: user.id,
+          template_id: session.template_id,
+          workout_type_id: 1,
+          date: typeof session.started_at === 'string' 
+            ? session.started_at 
+            : session.started_at.toISOString(),
+          duration: duration * 60,
+          rating,
+          perceived_effort: effort,
+          notes: notes.trim() || null,
+        })
+        .select()
+        .single()
 
       if (sessionError) throw sessionError
 
-      const setLogs = session!.exercises.flatMap(ex =>
+      const setLogs = session.exercises.flatMap(ex =>
         ex.sets
           .filter(set => set.completed)
           .map((set, index) => ({
@@ -102,14 +103,14 @@ export function GymWorkoutComplete() {
 
       if (setsError) throw setsError
 
-      navigate('/gym', { 
-        state: { 
-          message: 'Workout saved! Great job! 💪' 
-        } 
-      })
+      showToast('Workout saved! Great job! 💪', 'success')
+      
+      setTimeout(() => {
+        navigate('/gym')
+      }, 1000)
     } catch (error) {
       console.error('Error saving workout:', error)
-      alert('Error saving workout. Please try again.')
+      showToast('Error saving workout. Please try again.', 'error')
     } finally {
       setSaving(false)
     }
@@ -273,7 +274,7 @@ export function GymWorkoutComplete() {
           </button>
 
           {rating === 0 && (
-            <p className="text-center text-xs font-semibold text-red-400/8xl tracking-wide mt-1 animate-pulse">
+            <p className="text-center text-xs font-semibold text-red-400 tracking-wide mt-1 animate-pulse">
               ⚠️ Please rate your workout before saving
             </p>
           )}

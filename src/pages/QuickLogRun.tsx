@@ -4,10 +4,12 @@ import { Save, Star } from 'lucide-react'
 import { PageLayout } from '../components/layout/PageLayout'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 
 export function QuickLogRun() {
   const navigate = useNavigate()
   const { user } = useAuth()
+  const { showToast } = useToast()
 
   const [distance, setDistance] = useState<number>(5)
   const [minutes, setMinutes] = useState<number>(25)
@@ -30,12 +32,12 @@ export function QuickLogRun() {
 
   async function handleSave() {
     if (!user || distance <= 0 || totalSeconds <= 0) {
-      alert('Please enter valid distance and time')
+      showToast('Please enter valid distance and time', 'warning')
       return
     }
 
     if (rating === 0) {
-      alert('Please rate your run!')
+      showToast('Please rate your run!', 'warning')
       return
     }
 
@@ -68,12 +70,14 @@ export function QuickLogRun() {
 
       if (runError) throw runError
 
-      navigate('/running', {
-        state: { message: 'Run logged! Great work! 🏃' }
-      })
+      showToast('Run logged! Great work! 🏃', 'success')
+      
+      setTimeout(() => {
+        navigate('/running')
+      }, 1000)
     } catch (error) {
       console.error('Error logging run:', error)
-      alert('Error saving run')
+      showToast('Error saving run. Please try again.', 'error')
     } finally {
       setSaving(false)
     }
@@ -222,24 +226,23 @@ export function QuickLogRun() {
             <div className="h-[1px] w-full bg-white/5"></div>
 
             {/* Effort Slider */}
-              {/* Perceived Effort Slider - Running Style */}
             <div className="glass-card rounded-2xl p-5 border border-white/5 bg-white/[0.01]">
-            <h3 className="text-sm font-bold text-gray-400 mb-2 uppercase tracking-widest text-center">Perceived Effort (RPE)</h3>
-            
-            <div className="flex items-center justify-between text-xs font-bold text-gray-500 mb-3 px-1 uppercase tracking-wider">
+              <h3 className="text-sm font-bold text-gray-400 mb-2 uppercase tracking-widest text-center">Perceived Effort (RPE)</h3>
+              
+              <div className="flex items-center justify-between text-xs font-bold text-gray-500 mb-3 px-1 uppercase tracking-wider">
                 <span>Easy</span>
                 <span className="text-2xl font-black text-white drop-shadow-[0_0_8px_rgba(0,250,255,0.4)]">{effort}</span>
                 <span>Maximal</span>
-            </div>
-            
-            <div className="relative w-full h-6 flex items-center mb-1">
+              </div>
+              
+              <div className="relative w-full h-6 flex items-center mb-1">
                 <input
-                type="range"
-                min="1"
-                max="10"
-                value={effort}
-                onChange={(e) => setEffort(parseInt(e.target.value))}
-                className="w-full h-2 rounded-full appearance-none cursor-pointer outline-none transition-all
+                  type="range"
+                  min="1"
+                  max="10"
+                  value={effort}
+                  onChange={(e) => setEffort(parseInt(e.target.value))}
+                  className="w-full h-2 rounded-full appearance-none cursor-pointer outline-none transition-all
                     [&::-webkit-slider-thumb]:appearance-none 
                     [&::-webkit-slider-thumb]:w-5 
                     [&::-webkit-slider-thumb]:h-5 
@@ -260,34 +263,33 @@ export function QuickLogRun() {
                     [&::-moz-range-thumb]:border-run-cyan
                     [&::-moz-range-thumb]:transition-transform
                     [&::-moz-range-thumb]:active:scale-125"
-                style={{
+                  style={{
                     background: `linear-gradient(to right, #00f0ff ${((effort - 1) / 9) * 100}%, rgba(255,255,255,0.05) ${((effort - 1) / 9) * 100}%)`
-                }}
+                  }}
                 />
-            </div>
-            
-            {/* Numbers Underneath */}
-            <div className="flex justify-between text-[10px] font-bold text-gray-600 px-1 select-none">
+              </div>
+              
+              {/* Numbers Underneath */}
+              <div className="flex justify-between text-[10px] font-bold text-gray-600 px-1 select-none">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
-                <span 
+                  <span 
                     key={n} 
                     className={`transition-all duration-150 ${
-                    effort === n 
+                      effort === n 
                         ? "text-run-cyan font-black scale-110 drop-shadow-[0_0_6px_rgba(0,240,255,0.5)]" 
                         : ""
                     }`}
-                >
+                  >
                     {n}
-                </span>
+                  </span>
                 ))}
+              </div>
             </div>
-            </div>
-            </div>
-
+          </div>
 
           {/* NOTES CARD */}
           <div className="glass-card bg-white/[0.03] border border-white/10 rounded-[32px] p-6">
-             <h2 className="text-gray-400 text-xs font-bold tracking-widest uppercase mb-4 text-center">Notes</h2>
+            <h2 className="text-gray-400 text-xs font-bold tracking-widest uppercase mb-4 text-center">Notes</h2>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
