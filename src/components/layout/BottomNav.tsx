@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Home, Dumbbell, Activity, User } from 'lucide-react'
+import { Home, Dumbbell, Activity, User, TrendingUp, BookOpen } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { usePreferences } from '../../hooks/usePreferences'
 
@@ -9,6 +9,8 @@ export function BottomNav() {
 
   const navItems = [
     { icon: Home, label: 'Home', path: '/dashboard', enabled: true },
+    { icon: TrendingUp, label: 'Progress', path: '/progress', enabled: true },
+    { icon: BookOpen, label: 'Exercises', path: '/exercises', enabled: true },
     { 
       icon: Dumbbell, 
       label: 'Gym', 
@@ -22,7 +24,7 @@ export function BottomNav() {
       enabled: preferences?.running_enabled ?? true 
     },
     { icon: User, label: 'Profile', path: '/profile', enabled: true },
-  ].filter(item => item.enabled) // Hide disabled items
+  ].filter(item => item.enabled)
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-enduro-gray/80 backdrop-blur-xl border-t border-white/5 px-4 py-2 safe-area-bottom z-50">

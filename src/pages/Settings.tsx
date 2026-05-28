@@ -286,7 +286,8 @@ export function Settings() {
 
             </div>
             </div>
-          {/* Admin Panel Link (after Units section, before Logout) */}
+          
+          {/* Admin Panel Link */}
           <button
             onClick={() => navigate('/admin')}
             className="w-full glass-card rounded-2xl p-4 flex items-center justify-between hover:bg-white/10 transition-colors active:scale-98"
@@ -303,7 +304,6 @@ export function Settings() {
             <ChevronRight size={20} className="text-gray-400" />
           </button>
 
-          
           {/* Logout Button */}
           <button
             onClick={handleLogout}
@@ -312,6 +312,37 @@ export function Settings() {
             <LogOut size={20} />
             Logout
           </button>
+
+          {/* About Section */}
+          <div className="border-t border-white/10 pt-6 mt-6">
+            <h3 className="text-lg font-bold mb-4">About Enduro</h3>
+            <div className="glass-card rounded-2xl p-6 space-y-4">
+              <div className="text-center">
+                <p className="text-gray-300 mb-3">
+                  Built with 💪 to help you track your fitness journey
+                </p>
+                <div className="h-16 bg-gym-gradient rounded-xl flex items-center justify-center mb-4">
+                  <span className="text-3xl font-black text-white">ENDURO</span>
+                </div>
+                <p className="text-sm text-gray-400 mb-6">
+                  Version 1.0 • Open Source
+                </p>
+                <a
+                  href="https://github.com/krstichs"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors mb-4"
+                >
+                  <span>GitHub</span>
+                  <span>→</span>
+                </a>
+                <p className="text-xs text-gray-500">
+                  Made with ❤️ by <span className="font-bold text-gym-orange">krstichs</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          
         </div>
       </div>
     </PageLayout>

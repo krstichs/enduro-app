@@ -19,6 +19,10 @@ import { Admin } from './pages/Admin'
 import { RunningDetail } from './pages/RunningDetail'
 import { ToastProvider } from './contexts/ToastContext'
 import React from 'react';
+import { ScrollToTop } from './components/ScrollToTop'
+import { Progress } from './pages/Progress'
+import { ExerciseLibrary } from './pages/ExerciseLibrary'
+import { AddExercise } from './pages/AddExercise'
 
 // Protected Route wrapper
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -53,162 +57,40 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" />} />
-      
-      <Route
-        path="/login"
-        element={
-          <PublicRoute>
-            <Login />
-          </PublicRoute>
-        }
-      />
-      
-      <Route
-        path="/signup"
-        element={
-          <PublicRoute>
-            <Signup />
-          </PublicRoute>
-        }
-      />
-      
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
+  {/* Auth Routes */}
+  <Route path="/login" element={<Login />} />
+  <Route path="/signup" element={<Signup />} />
 
-      {/* GYM ROUTES */}
-      <Route
-        path="/gym"
-        element={
-          <ProtectedRoute>
-            <GymTemplates />
-          </ProtectedRoute>
-        }
-      />
+  {/* Protected Routes */}
+  <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+  <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+  <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+  <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+  <Route path="/progress" element={<ProtectedRoute><Progress /></ProtectedRoute>} />
+  <Route path="/workout/:id" element={<ProtectedRoute><WorkoutDetail /></ProtectedRoute>} />
+  <Route path="/running/session/:id" element={<ProtectedRoute><RunningDetail /></ProtectedRoute>} />
 
-      <Route
-        path="/gym/new"
-        element={
-          <ProtectedRoute>
-            <GymTemplateCreator />
-          </ProtectedRoute>
-        }
-      />
-      
-      <Route
-        path="/gym/template/:id"
-        element={
-          <ProtectedRoute>
-            <GymTemplateDetail />
-          </ProtectedRoute>
-        }
-      />
+  {/* Exercise Routes */}
+  <Route path="/exercises" element={<ProtectedRoute><ExerciseLibrary /></ProtectedRoute>} />
+  <Route path="/exercises/add" element={<ProtectedRoute><AddExercise /></ProtectedRoute>} />
 
-      <Route
-        path="/gym/template/:id/edit"
-        element={
-          <ProtectedRoute>
-            <GymTemplateEditor />
-          </ProtectedRoute>
-        }
-      />
+  {/* Gym Routes */}
+  <Route path="/gym" element={<ProtectedRoute><GymTemplates /></ProtectedRoute>} />
+  <Route path="/gym/new" element={<ProtectedRoute><GymTemplateCreator /></ProtectedRoute>} />
+  <Route path="/gym/template/:id" element={<ProtectedRoute><GymTemplateDetail /></ProtectedRoute>} />
+  <Route path="/gym/template/:id/edit" element={<ProtectedRoute><GymTemplateEditor /></ProtectedRoute>} />
+  <Route path="/gym/workout/:id/start" element={<ProtectedRoute><GymWorkoutTracker /></ProtectedRoute>} />
+  <Route path="/gym/workout/:id/complete" element={<ProtectedRoute><GymWorkoutComplete /></ProtectedRoute>} />
 
-      <Route
-        path="/gym/workout/:id/start"
-        element={
-          <ProtectedRoute>
-            <GymWorkoutTracker />
-          </ProtectedRoute>
-        }
-      />
+  {/* Running Routes */}
+  <Route path="/running" element={<ProtectedRoute><RunningTemplates /></ProtectedRoute>} />
+  <Route path="/running/new" element={<ProtectedRoute><RunningTemplateCreator /></ProtectedRoute>} />
+  <Route path="/running/log" element={<ProtectedRoute><QuickLogRun /></ProtectedRoute>} />
 
-      <Route
-        path="/gym/workout/:id/complete"
-        element={
-          <ProtectedRoute>
-            <GymWorkoutComplete />
-          </ProtectedRoute>
-        }
-      />
-      
-      <Route
-        path="/settings"
-        element={
-          <ProtectedRoute>
-            <Settings />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/running"
-        element={
-          <ProtectedRoute>
-            <RunningTemplates />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/running/new"
-        element={
-          <ProtectedRoute>
-            <RunningTemplateCreator />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/running/log"
-        element={
-          <ProtectedRoute>
-            <QuickLogRun />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/workout/:id"
-        element={
-          <ProtectedRoute>
-            <WorkoutDetail />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/admin"
-        element={
-          <ProtectedRoute>
-            <Admin />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/running/session/:id"
-        element={
-          <ProtectedRoute>
-            <RunningDetail />
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
+  {/* Catch All */}
+  <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+  <Route path="*" element={<Navigate to="/dashboard" replace />} />
+</Routes>
 
     
 
@@ -220,7 +102,8 @@ function AppRoutes() {
 function App() {
   return (
     <React.StrictMode>
-      <BrowserRouter> {/* <-- 2. OVO vraća ruter i rešava crni ekran! */}
+      <BrowserRouter> 
+      <ScrollToTop /> 
         <AuthProvider>
           <ToastProvider>
             <AppRoutes />
