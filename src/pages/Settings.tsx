@@ -4,6 +4,7 @@ import { Save, LogOut, Dumbbell, Activity, Scale, Map, ChevronRight } from 'luci
 import { PageLayout } from '../components/layout/PageLayout'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 
 interface UserPreferences {
   gym_enabled: boolean
@@ -16,6 +17,7 @@ interface UserPreferences {
 export function Settings() {
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
+  const { showToast } = useToast()
 
   const [preferences, setPreferences] = useState<UserPreferences>({
     gym_enabled: true,
@@ -42,7 +44,6 @@ export function Settings() {
         .single()
 
       if (error) {
-        // If no preferences exist, create default
         if (error.code === 'PGRST116') {
           await createDefaultPreferences()
         } else {
@@ -53,6 +54,7 @@ export function Settings() {
       }
     } catch (error) {
       console.error('Error fetching preferences:', error)
+      showToast('Error loading preferences', 'error')
     } finally {
       setLoading(false)
     }
@@ -61,21 +63,26 @@ export function Settings() {
   async function createDefaultPreferences() {
     if (!user) return
 
-    const { data, error } = await supabase
-      .from('user_preferences')
-      .insert({
-        user_id: user.id,
-        gym_enabled: true,
-        running_enabled: true,
-        units_weight: 'kg',
-        units_distance: 'km',
-        theme: 'dark',
-      })
-      .select()
-      .single()
+    try {
+      const { data, error } = await supabase
+        .from('user_preferences')
+        .insert({
+          user_id: user.id,
+          gym_enabled: true,
+          running_enabled: true,
+          units_weight: 'kg',
+          units_distance: 'km',
+          theme: 'dark',
+        })
+        .select()
+        .single()
 
-    if (error) throw error
-    setPreferences(data)
+      if (error) throw error
+      setPreferences(data)
+    } catch (error) {
+      console.error('Error creating preferences:', error)
+      showToast('Error creating preferences', 'error')
+    }
   }
 
   async function handleSave() {
@@ -94,11 +101,11 @@ export function Settings() {
 
       if (error) throw error
 
-      // Reload page to apply changes
-      window.location.reload()
+      showToast('Settings saved! ✅', 'success')
+      setTimeout(() => window.location.reload(), 1000)
     } catch (error) {
       console.error('Error saving preferences:', error)
-      alert('Error saving settings')
+      showToast('Error saving settings', 'error')
     } finally {
       setSaving(false)
     }
@@ -106,8 +113,13 @@ export function Settings() {
 
   async function handleLogout() {
     if (window.confirm('Are you sure you want to logout?')) {
-      await signOut()
-      navigate('/login')
+      try {
+        await signOut()
+        navigate('/login')
+        showToast('Logged out successfully', 'success')
+      } catch (error) {
+        showToast('Error logging out', 'error')
+      }
     }
   }
 
@@ -155,9 +167,9 @@ export function Settings() {
                 <p className="font-semibold">{user?.email}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-400">Username</p>
+                <p className="text-sm text-gray-400">Member Since</p>
                 <p className="font-semibold">
-                  {user?.user_metadata?.username || 'Not set'}
+                  {user?.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A'}
                 </p>
               </div>
             </div>
@@ -168,44 +180,44 @@ export function Settings() {
             <h3 className="text-lg font-bold mb-4">Activity Tracking</h3>
             <div className="space-y-4">
               {/* Gym Toggle */}
-            <label className="flex items-center justify-between cursor-pointer p-2 hover:bg-white/5 rounded-2xl transition-colors">
-            <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gym-orange/20 rounded-lg flex items-center justify-center">
-                <Dumbbell size={20} className="text-gym-orange" />
+              <label className="flex items-center justify-between cursor-pointer p-2 hover:bg-white/5 rounded-2xl transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gym-orange/20 rounded-lg flex items-center justify-center">
+                    <Dumbbell size={20} className="text-gym-orange" />
+                  </div>
+                  <div>
+                    <p className="font-semibold">Gym Workouts</p>
+                    <p className="text-sm text-gray-400">Track strength training</p>
+                  </div>
                 </div>
-                <div>
-                <p className="font-semibold">Gym Workouts</p>
-                <p className="text-sm text-gray-400">Track strength training</p>
-                </div>
-            </div>
-            <input
-                type="checkbox"
-                checked={preferences.gym_enabled}
-                onChange={(e) => updatePreference('gym_enabled', e.target.checked)}
-                className="w-12 h-6 appearance-none bg-neutral-800 checked:bg-gym-orange rounded-full relative cursor-pointer transition-colors duration-200 focus:outline-none
-                after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:w-4 after:h-4 after:bg-gray-500 checked:after:bg-white after:rounded-full after:transition-transform after:duration-200 checked:after:translate-x-6"
-            />
-            </label>
+                <input
+                  type="checkbox"
+                  checked={preferences.gym_enabled}
+                  onChange={(e) => updatePreference('gym_enabled', e.target.checked)}
+                  className="w-12 h-6 appearance-none bg-neutral-800 checked:bg-gym-orange rounded-full relative cursor-pointer transition-colors duration-200 focus:outline-none
+                  after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:w-4 after:h-4 after:bg-gray-500 checked:after:bg-white after:rounded-full after:transition-transform after:duration-200 checked:after:translate-x-6"
+                />
+              </label>
 
-            {/* Running Toggle */}
-            <label className="flex items-center justify-between cursor-pointer p-2 hover:bg-white/5 rounded-2xl transition-colors">
-            <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-run-cyan/20 rounded-lg flex items-center justify-center">
-                <Activity size={20} className="text-run-cyan" />
+              {/* Running Toggle */}
+              <label className="flex items-center justify-between cursor-pointer p-2 hover:bg-white/5 rounded-2xl transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-run-cyan/20 rounded-lg flex items-center justify-center">
+                    <Activity size={20} className="text-run-cyan" />
+                  </div>
+                  <div>
+                    <p className="font-semibold">Running</p>
+                    <p className="text-sm text-gray-400">Track cardio & runs</p>
+                  </div>
                 </div>
-                <div>
-                <p className="font-semibold">Running</p>
-                <p className="text-sm text-gray-400">Track cardio & runs</p>
-                </div>
-            </div>
-            <input
-                type="checkbox"
-                checked={preferences.running_enabled}
-                onChange={(e) => updatePreference('running_enabled', e.target.checked)}
-                className="w-12 h-6 appearance-none bg-neutral-800 checked:bg-run-cyan rounded-full relative cursor-pointer transition-colors duration-200 focus:outline-none
-                after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:w-4 after:h-4 after:bg-gray-500 checked:after:bg-white after:rounded-full after:transition-transform after:duration-200 checked:after:translate-x-6"
-            />
-            </label>
+                <input
+                  type="checkbox"
+                  checked={preferences.running_enabled}
+                  onChange={(e) => updatePreference('running_enabled', e.target.checked)}
+                  className="w-12 h-6 appearance-none bg-neutral-800 checked:bg-run-cyan rounded-full relative cursor-pointer transition-colors duration-200 focus:outline-none
+                  after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:w-4 after:h-4 after:bg-gray-500 checked:after:bg-white after:rounded-full after:transition-transform after:duration-200 checked:after:translate-x-6"
+                />
+              </label>
 
               {!preferences.gym_enabled && !preferences.running_enabled && (
                 <div className="bg-red-900/20 border border-red-500/30 rounded-xl p-3 text-sm text-red-400">
@@ -216,76 +228,76 @@ export function Settings() {
           </div>
 
           {/* Units */}
-            <div className="glass-card rounded-2xl p-6">
+          <div className="glass-card rounded-2xl p-6">
             <h3 className="text-lg font-bold mb-4">Units</h3>
             <div className="space-y-5">
-                
-                {/* Weight Units */}
-                <div>
+              
+              {/* Weight Units */}
+              <div>
                 <label className="flex items-center gap-3 mb-2.5">
-                    <Scale size={20} className="text-gray-400" />
-                    <span className="font-semibold text-sm text-gray-300">Weight</span>
+                  <Scale size={20} className="text-gray-400" />
+                  <span className="font-semibold text-sm text-gray-300">Weight</span>
                 </label>
                 <div className="flex bg-neutral-900/90 p-1 rounded-xl gap-1 border border-white/5">
-                    <button
+                  <button
                     type="button"
                     onClick={() => updatePreference('units_weight', 'kg')}
                     className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 border ${
-                        preferences.units_weight === 'kg'
+                      preferences.units_weight === 'kg'
                         ? 'border-gym-orange text-gym-orange bg-transparent shadow-sm'
                         : 'border-transparent text-neutral-400 hover:text-white hover:bg-white/5'
                     }`}
-                    >
+                  >
                     Kilograms (kg)
-                    </button>
-                    <button
+                  </button>
+                  <button
                     type="button"
                     onClick={() => updatePreference('units_weight', 'lbs')}
                     className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 border ${
-                        preferences.units_weight === 'lbs'
+                      preferences.units_weight === 'lbs'
                         ? 'border-gym-orange text-gym-orange bg-transparent shadow-sm'
                         : 'border-transparent text-neutral-400 hover:text-white hover:bg-white/5'
                     }`}
-                    >
+                  >
                     Pounds (lbs)
-                    </button>
+                  </button>
                 </div>
-                </div>
+              </div>
 
-                {/* Distance Units */}
-                <div>
+              {/* Distance Units */}
+              <div>
                 <label className="flex items-center gap-3 mb-2.5">
-                    <Map size={20} className="text-gray-400" />
-                    <span className="font-semibold text-sm text-gray-300">Distance</span>
+                  <Map size={20} className="text-gray-400" />
+                  <span className="font-semibold text-sm text-gray-300">Distance</span>
                 </label>
                 <div className="flex bg-neutral-900/90 p-1 rounded-xl gap-1 border border-white/5">
-                    <button
+                  <button
                     type="button"
                     onClick={() => updatePreference('units_distance', 'km')}
                     className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 border ${
-                        preferences.units_distance === 'km'
+                      preferences.units_distance === 'km'
                         ? 'border-run-cyan text-run-cyan bg-transparent shadow-sm'
                         : 'border-transparent text-neutral-400 hover:text-white hover:bg-white/5'
                     }`}
-                    >
+                  >
                     Kilometers (km)
-                    </button>
-                    <button
+                  </button>
+                  <button
                     type="button"
                     onClick={() => updatePreference('units_distance', 'miles')}
                     className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 border ${
-                        preferences.units_distance === 'miles'
+                      preferences.units_distance === 'miles'
                         ? 'border-run-cyan text-run-cyan bg-transparent shadow-sm'
                         : 'border-transparent text-neutral-400 hover:text-white hover:bg-white/5'
                     }`}
-                    >
+                  >
                     Miles (mi)
-                    </button>
+                  </button>
                 </div>
-                </div>
+              </div>
 
             </div>
-            </div>
+          </div>
           
           {/* Admin Panel Link */}
           <button
@@ -304,22 +316,13 @@ export function Settings() {
             <ChevronRight size={20} className="text-gray-400" />
           </button>
 
-          {/* Logout Button */}
-          <button
-            onClick={handleLogout}
-            className="w-full bg-red-900/20 hover:bg-red-900/30 border border-red-500/30 text-red-400 font-semibold py-4 rounded-xl transition-colors flex items-center justify-center gap-3"
-          >
-            <LogOut size={20} />
-            Logout
-          </button>
-
           {/* About Section */}
           <div className="border-t border-white/10 pt-6 mt-6">
             <h3 className="text-lg font-bold mb-4">About Enduro</h3>
             <div className="glass-card rounded-2xl p-6 space-y-4">
               <div className="text-center">
                 <p className="text-gray-300 mb-3">
-                  Built with 💪 to help you track your fitness journey
+                  Built with muscles to help you track your fitness journey
                 </p>
                 <div className="h-16 bg-gym-gradient rounded-xl flex items-center justify-center mb-4">
                   <span className="text-3xl font-black text-white">ENDURO</span>
@@ -337,11 +340,20 @@ export function Settings() {
                   <span>→</span>
                 </a>
                 <p className="text-xs text-gray-500">
-                  Made with ❤️ by <span className="font-bold text-gym-orange">krstichs</span>
+                  Made with heart by <span className="font-bold text-gym-orange">krstichs</span>
                 </p>
               </div>
             </div>
           </div>
+
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="w-full bg-red-900/20 hover:bg-red-900/30 border border-red-500/30 text-red-400 font-semibold py-4 rounded-xl transition-colors flex items-center justify-center gap-3"
+          >
+            <LogOut size={20} />
+            Logout
+          </button>
           
         </div>
       </div>

@@ -355,14 +355,13 @@ export function Dashboard() {
             </button>
           </div>
         </div>
-{/* Recent Activity */}
+
+        {/* Recent Activity */}
         <div className="px-4 pb-24">
           <h2 className="text-xl font-bold mb-4">Recent Activity</h2>
           
           {loading ? (
             <div className="space-y-6">
-              {/* Ako treba da se prikaže i SkeletonStats ovde, stavi ga. Ako ne, obriši ga. */}
-              {/* <SkeletonStats /> */}
               <div className="space-y-3">
                 <SkeletonCard />
                 <SkeletonCard />
@@ -420,6 +419,22 @@ export function Dashboard() {
           )}
         </div>
       </div>
+
+      {/* Footer */}
+      <div className="text-center py-6 border-t border-white/10 mt-8">
+        <p className="text-xs text-gray-600 mb-2">
+          Made with heart by <span className="font-bold text-gym-orange">krstichs</span>
+        </p>
+        <a
+          href="https://github.com/krstichs"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs text-run-cyan hover:text-run-cyan/80 transition-colors"
+        >
+          github.com/krstichs
+        </a>
+      </div>
+      
     </PageLayout>
   )
 }
