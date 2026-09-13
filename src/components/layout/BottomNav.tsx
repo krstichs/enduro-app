@@ -27,8 +27,8 @@ export function BottomNav() {
   ].filter(item => item.enabled)
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-enduro-gray/80 backdrop-blur-xl border-t border-white/5 px-4 py-2 safe-area-bottom z-50">
-      <div className="flex items-center justify-around max-w-lg mx-auto">
+    <nav className="fixed bottom-0 left-0 right-0 bg-enduro-gray/80 backdrop-blur-xl border-t border-white/5 z-50 w-full">
+      <div className="flex items-center justify-around px-4 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] max-w-screen">
         {navItems.map(({ icon: Icon, label, path }) => {
           const isActive = location.pathname === path
           
@@ -36,7 +36,7 @@ export function BottomNav() {
             <Link
               key={path}
               to={path}
-              className="relative flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all active:scale-95"
+              className="relative flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-xl transition-all active:scale-95 flex-1 min-w-0"
             >
               {isActive && (
                 <div className="absolute inset-0 bg-gym-gradient opacity-10 rounded-xl" />
@@ -50,7 +50,7 @@ export function BottomNav() {
               </div>
               
               <span className={cn(
-                'text-xs font-medium transition-colors',
+                'text-xs font-medium transition-colors truncate',
                 isActive ? 'text-gym-orange' : 'text-gray-400'
               )}>
                 {label}

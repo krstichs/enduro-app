@@ -186,89 +186,99 @@ export function ExerciseLibrary() {
           )}
         </div>
       </div>
-
       {/* Exercise Detail Modal */}
-      {selectedExercise && (
-        <div className="fixed inset-0 bg-black/80 z-50 flex items-end animate-in">
-          <div className="w-full bg-enduro-dark rounded-t-3xl p-6 max-h-[90vh] overflow-y-auto animate-slide-up">
-            {/* Close Button */}
-            <div className="flex justify-end mb-4">
-              <button
-                onClick={() => setSelectedExercise(null)}
-                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-              >
-                <span className="text-2xl">✕</span>
-              </button>
-            </div>
+{selectedExercise && (
+  <div className="fixed inset-0 bg-black/80 z-[100] flex items-end animate-in">
+    <div className="w-full bg-enduro-dark rounded-t-3xl max-h-[80dvh] flex flex-col overflow-hidden animate-slide-up shadow-2xl">
+      
+      {/* Fixed Top Header (Fiksirano X dugme) */}
+      <div className="px-6 pt-4 pb-2 flex justify-end shrink-0 bg-enduro-dark z-10 border-b border-white/5">
+        <button
+          onClick={() => setSelectedExercise(null)}
+          className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors text-gray-400 hover:text-white"
+        >
+          <span className="text-lg font-bold leading-none">✕</span>
+        </button>
+      </div>
 
-            {/* Image */}
-            {selectedExercise.image_url ? (
-              <img
-                src={selectedExercise.image_url}
-                alt={selectedExercise.name}
-                className="w-full h-80 object-cover rounded-2xl mb-6"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none'
-                }}
-              />
-            ) : (
-              <div className="w-full h-80 bg-gym-orange/20 rounded-2xl mb-6 flex items-center justify-center">
-                <ImageIcon size={64} className="text-gym-orange/50" />
-              </div>
-            )}
+      {/* Scrollable Content Container (Samo ovaj deo skroluje) */}
+      <div className="p-6 pt-2 overflow-y-auto flex-1 space-y-6">
+        
+        {/* Image */}
+        {selectedExercise.image_url ? (
+          <img
+            src={selectedExercise.image_url}
+            alt={selectedExercise.name}
+            className="w-full h-100 object-cover rounded-2xl"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none'
+            }}
+          />
+        ) : (
+          <div className="w-full h-40 bg-gym-orange/20 rounded-2xl flex items-center justify-center">
+            <ImageIcon size={48} className="text-gym-orange/50" />
+          </div>
+        )}
 
-            {/* Title & Info */}
-            <h2 className="text-3xl font-black mb-2">{selectedExercise.name}</h2>
-            <div className="flex gap-2 mb-6 flex-wrap">
-              <span className="px-3 py-1 bg-gym-orange/20 text-gym-orange rounded-full text-sm font-semibold">
-                {selectedExercise.muscle_group}
-              </span>
-              <span className="px-3 py-1 bg-run-cyan/20 text-run-cyan rounded-full text-sm font-semibold">
-                {selectedExercise.equipment}
-              </span>
-            </div>
-
-            {/* Description */}
-            {selectedExercise.description && (
-              <div className="mb-6">
-                <h3 className="font-bold text-lg mb-2">How to Perform</h3>
-                <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">{selectedExercise.description}</p>
-              </div>
-            )}
-
-            {/* Tips */}
-            {selectedExercise.tips && (
-              <div className="mb-6 glass-card rounded-2xl p-4">
-                <h3 className="font-bold text-lg mb-2">💡 Pro Tips</h3>
-                <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">{selectedExercise.tips}</p>
-              </div>
-            )}
-
-            {/* Video Link */}
-            {selectedExercise.video_url && (
-              <a
-                href={selectedExercise.video_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full btn-primary-gym flex items-center justify-center gap-2 mb-4 hover:scale-105 transition-transform"
-              >
-                <Play size={20} fill="currentColor" />
-                Watch Video Tutorial
-              </a>
-            )}
-
-            {/* Use in Workout Button */}
-            <button
-              onClick={() => {
-                setSelectedExercise(null)
-              }}
-              className="w-full py-3 bg-success-green text-white font-bold rounded-xl active:scale-95 transition-transform"
-            >
-              Use in Workout
-            </button>
+        {/* Title & Info */}
+        <div>
+          <h2 className="text-2xl font-black mb-2">{selectedExercise.name}</h2>
+          <div className="flex gap-2 flex-wrap">
+            <span className="px-3 py-1 bg-gym-orange/20 text-gym-orange rounded-full text-xs font-semibold">
+              {selectedExercise.muscle_group}
+            </span>
+            <span className="px-3 py-1 bg-run-cyan/20 text-run-cyan rounded-full text-xs font-semibold">
+              {selectedExercise.equipment}
+            </span>
           </div>
         </div>
-      )}
-    </PageLayout>
+
+        {/* Description */}
+        {selectedExercise.description && (
+          <div>
+            <h3 className="font-bold text-base mb-1 text-white">How to Perform</h3>
+            <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">{selectedExercise.description}</p>
+          </div>
+        )}
+
+        {/* Tips */}
+        {selectedExercise.tips && (
+          <div className="glass-card rounded-2xl p-4">
+            <h3 className="font-bold text-base mb-1 text-white">💡 Pro Tips</h3>
+            <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">{selectedExercise.tips}</p>
+          </div>
+        )}
+
+        {/* Video Link */}
+        {selectedExercise.video_url && (
+          <a
+            href={selectedExercise.video_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full btn-primary-gym flex items-center justify-center gap-2 py-3 rounded-xl hover:scale-105 transition-transform text-sm font-semibold"
+          >
+            <Play size={18} fill="currentColor" />
+            Watch Video Tutorial
+          </a>
+        )}
+      </div>
+
+      {/* Fixed Bottom Action Bar (Fiksirano Use in Workout dugme) */}
+      <div className="p-4 pb-8 bg-enduro-dark border-t border-white/10 shrink-0">
+        <button
+          onClick={() => {
+            setSelectedExercise(null)
+          }}
+          className="w-full py-3.5 bg-success-green hover:bg-success-green/90 text-white font-bold rounded-xl active:scale-95 transition-transform shadow-lg shadow-success-green/20"
+        >
+          Use in Workout
+        </button>
+      </div>
+
+    </div>
+  </div>
+)}
+
+         </PageLayout>
   )
 }
